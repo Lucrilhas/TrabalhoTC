@@ -1,5 +1,0 @@
-1- Alfabeto
-2- Estados atingíveis (separados por virgula)
-3- Estado inicial
-4- Estados finais (separados por virgula)
-5- Regras de transicao (uma abaixo da outra: estado inicial, simbolo, estado alvo)
