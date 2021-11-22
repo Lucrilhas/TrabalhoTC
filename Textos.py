@@ -16,6 +16,7 @@ txts = {
                     'Conjunto de estados Q: ',
                     'Alfabeto de entradas \u03A3: ',
                     'Estado inicial q\u2080',
-                    'Estados Finais F: '
+                    'Estados Finais F: ',
+                    'Palavra para testar:'
     ]
 }

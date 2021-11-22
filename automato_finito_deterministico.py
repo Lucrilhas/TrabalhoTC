@@ -1,71 +1,71 @@
 class Afd():
     def __init__(self):
-        self.alfabeto = None
-        self.estados = None
-        self.estado_inicial = None
-        self.estados_finais = None
-        self.regras_transicao = None
-        self.automato = None
+
+        self.dados = None
     
-    def leitura_arquivo(self, nome_arquivo):
+    def leitura_arquivo(self, nome_arquivo, palavra):
         with open(nome_arquivo, 'r') as arquivo:
-            self.automato = [linha.replace('\n', '') for linha in arquivo]
+            dados_automato = [linha.split(',') for linha in [linha.replace('\n', '') for linha in arquivo]]
+            self.dados = {
+                'Q': dados_automato[1],
+                'E': dados_automato[0],
+                'q': dados_automato[2],
+                'F': dados_automato[3],
+                'P': palavra,
+                'FT': dados_automato[4:].copy()
+            }
         
-    def set_5upla(self):
-        dados_automato = [linha.split(',') for linha in self.automato]
-        self.alfabeto = dados_automato[0]
-        self.estados = dados_automato[1]
-        self.estado_inicial = dados_automato[2]
-        self.estados_finais = dados_automato[3]
-        self.regras_transicao = dados_automato[4:].copy()
+    def set_5upla(self, dados):
+        self.dados = dados
 
     def mostrar_dados(self):
         print(" === Dados gerais do automato ===\n")
-        print(f" * Alfabeto: {self.alfabeto}")
-        print(f" * Estados: {self.estados}")
-        print(f" * Estado Inicial: {self.estado_inicial}")
-        print(f" * Estados Finais: {self.estados_finais}")
+        print(f" * Alfabeto: {self.dados['E']}")
+        print(f" * Estados: {self.dados['Q']}")
+        print(f" * Estado Inicial: {self.dados['q']}")
+        print(f" * Estados Finais: {self.dados['F']}")
+        print(f" * Palavra: {self.dados['P']}")
 
         print("\n === Regras de transicao ===\n")
-        for regra in self.regras_transicao:
+        for regra in self.dados['FT']:
             print(' - ', regra)
 
     def validar_automato(self):
-        if len(self.estados) == 0:
+        if len(self.dados['Q']) == 0:
             print("\n # Conjunto de estados vazio!")
             return False
 
-        for ef in self.estados_finais:
-            if ef not in self.estados:
+        for ef in self.dados['F']:
+            if ef not in self.dados['Q']:
                 print("\n # Estados finais devem estar no conjunto de estados atingiveis!")
                 return False
 
-        for regra in self.regras_transicao:
-            if regra[0] not in self.estados:
+        for regra in self.dados['FT']:
+            if regra[0] not in self.dados['Q']:
                 print("\n # Os estados iniciais das regras devem estar no conjunto de estados atingiveis!")
                 return False
 
-            if regra[1] not in self.alfabeto:
+            if regra[1] not in self.dados['E']:
                 print("\n # Os simbolos das regras devem estar no alfabeto!")
                 return False
 
-            if regra[2] not in self.estados:
+            if regra[2] not in self.dados['Q']:
                 print("\n # Os estados alvo das regras devem estar no conjunto de estados atingíveis!")
                 return False
 
         return True
 
-    def ler_palavra(self, palavra):
-        estado_atual = self.estado_inicial[0]
+    def ler_palavra(self):
+        estado_atual = self.dados['q'][0]
         print("\n === Inicio do processamento do automato === \n")
 
-        for i, letra in enumerate(palavra):
+        for i, letra in enumerate(self.dados['P']):
             estado_validacao = False
 
-            for regra in self.regras_transicao:
+            for regra in self.dados['FT']:
                 if (regra[0] == estado_atual) and (regra[1] == letra):
                     print(f" - Estado atual: {estado_atual}", end=' ')
-                    print(f"| Restante palavra: {palavra[i:]}", end=' ')
+                    print(f"| Restante palavra: {self.dados['P'][i:]}", end=' ')
                     print(f"| Para o estado:", regra[2])
                     estado_atual = regra[2]
                     estado_validacao = True
@@ -74,7 +74,7 @@ class Afd():
             if not estado_validacao:
                 return False
 
-        if estado_atual in self.estados_finais:
+        if estado_atual in self.dados['F']:
             return True
         else:
             return False

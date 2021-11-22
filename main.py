@@ -6,7 +6,6 @@ if __name__ == '__main__':
 
     # Faz a leitura do arquivo
     automato.leitura_arquivo('afd_ramon.txt')
-
     # Setar valores para a execucao do programa
     automato.set_5upla()
 
@@ -18,7 +17,7 @@ if __name__ == '__main__':
 
     # Fazer leitura da palavra
     if validacao_automato:
-        validacao_palavra = automato.ler_palavra("01010")
+        validacao_palavra = automato.ler_palavra("01110")
 
         if validacao_palavra:
             print("\n # Palavra valida!")
