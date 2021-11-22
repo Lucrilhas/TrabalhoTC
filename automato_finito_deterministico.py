@@ -52,6 +52,7 @@ class Afd():
 
     def ler_palavra(self):
         estado_atual = self.dados['q'][0]
+        saida = ''
         print("\n === Inicio do processamento do automato === \n")
 
         for i, letra in enumerate(self.dados['P']):
@@ -59,17 +60,16 @@ class Afd():
 
             for regra in self.dados['FT']:
                 if (regra[0] == estado_atual) and (regra[1] == letra):
-                    print(f" - Estado atual: {estado_atual}", end=' ')
-                    print(f"| Restante palavra: {self.dados['P'][i:]}", end=' ')
-                    print(f"| Para o estado:", regra[2])
+                    aux= self.dados['P'][i:]
+                    saida = saida + f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
                     estado_atual = regra[2]
                     estado_validacao = True
                     break
 
             if not estado_validacao:
-                return False
+                return '\n # Palavra invalida!'
 
         if estado_atual in self.dados['F']:
-            return True
+            return saida + '\n # Palavra valida!'
         else:
-            return False
+            return '\n # Palavra invalida!'

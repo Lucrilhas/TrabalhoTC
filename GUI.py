@@ -44,7 +44,7 @@ class Programa:
 
         # Guia do Deterministico
 
-        # Explicação da quintupla
+        # Explicação da AFD
         frm_afd = tk.LabelFrame(tab[0], text='O que é um Autômato Deterministico?', font=("Times new Roman", 15))
         tk.Label(frm_afd, text=txts['AFD'], justify='left', font=("Times new Roman", 15)).grid(column=0, row=0,
                                                                                                sticky='W')
@@ -81,6 +81,14 @@ class Programa:
         scrl_5Tupla.pack(side=tk.RIGHT, fill=tk.Y)
         frm_regras_trans.grid(column=1, row=1, rowspan=2, padx=(10, 10), pady=(10, 10))
 
+        # Erro de entradas
+        self.frm_erro = tk.LabelFrame(tab[0], text='Erro!:', font=("Times new Roman", 15))
+        self.lbl_erro =  tk.Label(self.frm_erro, text='Erro tal', justify='left', font=("Times new Roman", 15))
+
+        # Resultados
+        self.frm_resul = tk.LabelFrame(tab[0], text='Resultado:', font=("Times new Roman", 15))
+        self.lbl_resul = tk.Label(self.frm_resul, text='resultado tal', justify='left', font=("Times new Roman", 15))
+
         # Inicializacao
         janela.mainloop()
 
@@ -104,12 +112,15 @@ class Programa:
 
         auto = Afd()
         auto.set_5upla(self.dados)
-        auto.mostrar_dados()
+        # auto.mostrar_dados()
         validacao_automato = auto.validar_automato()
-        if validacao_automato:
-            validacao_palavra = auto.ler_palavra()
-            if validacao_palavra:
-                print("\n # Palavra valida!")
-            else:
-                print("\n # Palavra invalida!")
+        if validacao_automato == 'Ok':
+            self.frm_erro.grid_forget()
+            self.lbl_resul['text'] = auto.ler_palavra()
+            self.lbl_resul.pack()
+            self.frm_resul.grid(column=0, row=4, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
 
+        else:
+            self.lbl_erro['text'] = validacao_automato
+            self.lbl_erro.pack()
+            self.frm_erro.grid(column=0, row=3, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
