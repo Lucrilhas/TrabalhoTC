@@ -57,7 +57,6 @@ class Afn():
 
         for i, j, k in zip(chaves, caminhos, destinos):
             afn_dicio[i][j].append(k)
-
         return afn_dicio
 
     def extrair_regras_dicionario(self, regras_dicio):
@@ -77,34 +76,41 @@ class Afn():
         lista_caminhos = list(afn_dicio[lista_chaves[0]].keys())
 
         # Calculando a primeira linha da tabela de transição do AFD
-        afd[lista_chaves[0]] = {}                              
+        afd[lista_chaves[0]] = {}                   
         for t in range(tam_alfabeto):
             # Criar novo estado
-            var = "".join(afn_dicio[lista_chaves[0]][lista_caminhos[t]]) 
+            string_estado = "".join(afn_dicio[lista_chaves[0]][lista_caminhos[t]]) 
 
             # Atribuir o estado na tabela AFD
-            afd[lista_chaves[0]][lista_caminhos[t]] = var            
-            if var not in lista_chaves:                         
-                lista_novos_estados.append(var)                 
-                lista_chaves.append(var)                       
+            afd[lista_chaves[0]][lista_caminhos[t]] = string_estado  
+
+            # Acrescentar string_estado à lista_chaves e lista_novos_estados          
+            if string_estado not in lista_chaves:                         
+                lista_novos_estados.append(string_estado)                 
+                lista_chaves.append(string_estado)                       
         
         # Calculando as outras linhas da tabela de transição AFD
-        while len(lista_novos_estados) != 0:    
-            # Pegar o primeiro elemento da lista_novos_estados e o examinar          
-            afd[lista_novos_estados[0]] = {}                  
+        while len(lista_novos_estados) != 0:   
+            # Pegar o primeiro elemento da lista_novos_estados e fazer sua análise        
+            afd[lista_novos_estados[0]] = {} 
             for _ in range(len(lista_novos_estados[0])):
                 for i in range(len(lista_caminhos)):
-                    temp = []                              
+                    lista_temp = []                              
                     for j in range(len(lista_novos_estados[0])):
-                        temp += afn_dicio[lista_novos_estados[0][j]][lista_caminhos[i]]  #levando a união dos estados
-                    s = ""
+                        # União dos estados
+                        lista_temp += afn_dicio[lista_novos_estados[0][j]][lista_caminhos[i]]  
+
                     # Cria um novo estado de todos os elementos da lista
-                    s = s.join(temp)                        
-                    if s not in lista_chaves:                 
-                        lista_novos_estados.append(s)           
-                        lista_chaves.append(s)  
+                    string_estado = ""
+                    string_estado = string_estado.join(lista_temp)    
+
+                    # Acrescentar string_estado à lista_chaves e lista_novos_estados 
+                    if string_estado not in lista_chaves:                 
+                        lista_novos_estados.append(string_estado)           
+                        lista_chaves.append(string_estado)  
+
                     # Atribuir o novo estado na tabela AFD             
-                    afd[lista_novos_estados[0]][lista_caminhos[i]] = s   
+                    afd[lista_novos_estados[0]][lista_caminhos[i]] = string_estado   
             
             # Remover o primeiro elemento em lista_novos_estados
             lista_novos_estados.remove(lista_novos_estados[0])
@@ -118,13 +124,16 @@ class Afn():
                     estados_finais_afd.append(x)
                     break
         
+        # Setar valores aos atributos
         self.estados = lista_estados_afd
         self.estados_finais = estados_finais_afd
         self.extrair_regras_dicionario(afd)
         
     def executa_afd(self, palavra):
+        # Mostrar dados do automato
         self.mostrar_dados()
 
+        # Criação de um objeto de um automato finito deterministico
         automato = Afd()
         automato.alfabeto = self.alfabeto
         automato.estados = self.estados
