@@ -32,28 +32,23 @@ class Afd():
 
     def validar_automato(self):
         if len(self.dados['Q']) == 0:
-            print("\n # Conjunto de estados vazio!")
-            return False
+            return 'Conjunto de estados vazio!'
 
         for ef in self.dados['F']:
             if ef not in self.dados['Q']:
-                print("\n # Estados finais devem estar no conjunto de estados atingiveis!")
-                return False
+                return 'Estados finais devem estar no conjunto de estados atingiveis!'
 
         for regra in self.dados['FT']:
             if regra[0] not in self.dados['Q']:
-                print("\n # Os estados iniciais das regras devem estar no conjunto de estados atingiveis!")
-                return False
+                return 'Os estados iniciais das regras devem estar no conjunto de estados atingiveis!'
 
             if regra[1] not in self.dados['E']:
-                print("\n # Os simbolos das regras devem estar no alfabeto!")
-                return False
+                return 'Os simbolos das regras devem estar no alfabeto!'
 
             if regra[2] not in self.dados['Q']:
-                print("\n # Os estados alvo das regras devem estar no conjunto de estados atingíveis!")
-                return False
+                return 'Os estados alvo das regras devem estar no conjunto de estados atingíveis!'
 
-        return True
+        return 'Ok'
 
     def ler_palavra(self):
         estado_atual = self.dados['q'][0]
