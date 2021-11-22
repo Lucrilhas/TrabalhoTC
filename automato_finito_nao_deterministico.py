@@ -118,10 +118,10 @@ class Afn():
         # Estados finais do AFD
         lista_estados_afd = list(afd.keys())
         estados_finais_afd = []
-        for x in lista_estados_afd:
-            for i in x:
-                if i in estados_finais_afn:
-                    estados_finais_afd.append(x)
+        for eafd in lista_estados_afd:
+            for item in eafd:
+                if item in estados_finais_afn:
+                    estados_finais_afd.append(eafd)
                     break
         
         # Setar valores aos atributos
