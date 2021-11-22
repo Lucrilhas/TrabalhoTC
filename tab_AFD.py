@@ -1,25 +1,31 @@
+import tkinter as tk
+from tkinter import ttk
+from Textos import txts
+from automato_finito_deterministico import Afd
+from ScrollFrame import ScrollableFrame
 
 class Tab_AFD():
     def __init__(self, janela):
-        # Scroll Geral
-        scrl_tudo = tk.Scrollbar(tab[0])
-        scrl_tudo.grid(column=2, row=0, columnspan=10, sticky='e')
-        tab[0]['yscrollcommand '] = scrl_tudo.set
+        # Canvas Principal
+        fs = ScrollableFrame(janela)
+        fs.pack(fill='both', expand=True)
+        fsp = fs.scrollable_frame
+
         # Explicação da AFD
-        frm_afd = tk.LabelFrame(tab[0], text='O que é um Autômato Deterministico?', font=("Times new Roman", 15))
+        frm_afd = tk.LabelFrame(fsp, text='O que é um Autômato Deterministico?', font=("Times new Roman", 15))
         tk.Label(frm_afd, text=txts['AFD'], justify='left', font=("Times new Roman", 15)).grid(column=0, row=0,
                                                                                                sticky='W')
         frm_afd.grid(column=0, row=0, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
 
         # Explicação da quintupla
-        frm_5Tupla_explicacao = tk.LabelFrame(tab[0], text='Definição de uma 5-Tupla:', font=("Times new Roman", 15))
+        frm_5Tupla_explicacao = tk.LabelFrame(fsp, text='Definição de uma 5-Tupla:', font=("Times new Roman", 15))
         tk.Label(frm_5Tupla_explicacao, text=txts['Exp5Tupla'], justify='left', font=("Times new Roman", 15)).grid(
             column=0, row=0, sticky='W')
         frm_5Tupla_explicacao.grid(column=0, row=1, sticky='news', padx=(10, 10), pady=(10, 10))
 
         # Coleta dados da quintupla
         self.edits_5Tupla = []  # 0-Conjunto de estados, 1-Alfabeto de entradas, 2-Estado inicial, 3-Estado final, 4-Regras
-        frm_5Tupla_coleta = tk.LabelFrame(tab[0], text='Valores da sua 5-Tupla:', font=("Times new Roman", 15))
+        frm_5Tupla_coleta = tk.LabelFrame(fsp, text='Valores da sua 5-Tupla:', font=("Times new Roman", 15))
         for indc, txt in enumerate(txts['Col5Tupla']):
             self.edits_5Tupla.append(tk.Entry(frm_5Tupla_coleta, bd=2, width=50))
             tk.Label(frm_5Tupla_coleta, text=txt, justify='left', font=("Times new Roman", 15)).grid(column=0, row=indc,
@@ -34,7 +40,7 @@ class Tab_AFD():
         btn_start.grid(column=0, row=5, sticky='ne', padx=(5, 5))
 
         # Coleta regra de transicao
-        frm_regras_trans = tk.LabelFrame(tab[0], text='Regras de Transição da sua 5-Tupla:',
+        frm_regras_trans = tk.LabelFrame(fsp, text='Regras de Transição da sua 5-Tupla:',
                                          font=("Times new Roman", 15))
         self.edits_5Tupla.append(tk.Text(frm_regras_trans, bd=2, width=50))
         scrl_5Tupla = tk.Scrollbar(frm_regras_trans)
@@ -45,15 +51,14 @@ class Tab_AFD():
         frm_regras_trans.grid(column=1, row=1, rowspan=2, padx=(10, 10), pady=(10, 10))
 
         # Erro de entradas
-        self.frm_erro = tk.LabelFrame(tab[0], text='Erro!:', font=("Times new Roman", 15))
+        self.frm_erro = tk.LabelFrame(fsp, text='Erro!:', font=("Times new Roman", 15))
         self.lbl_erro = tk.Label(self.frm_erro, text='Erro tal', justify='left', font=("Times new Roman", 15))
 
         # Resultados
-        self.frm_resul = tk.LabelFrame(tab[0], text='Resultado:', font=("Times new Roman", 15))
+        self.frm_resul = tk.LabelFrame(fsp, text='Resultado:', font=("Times new Roman", 15))
         self.lbl_resul = tk.Label(self.frm_resul, text='resultado tal', justify='left', font=("Times new Roman", 15))
 
-        # Inicializacao
-        janela.mainloop()
+
 
     def teste_insert(self):
         self.edits_5Tupla[0].insert(0, 'q0, q1, q2, qf')
