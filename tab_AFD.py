@@ -3,6 +3,8 @@ from tkinter import ttk
 from Textos import txts
 from automato_finito_deterministico import Afd
 from ScrollFrame import ScrollableFrame
+from grafos import DesenhaAutomato
+from PIL import ImageTk, Image
 
 class Tab_AFD():
     def __init__(self, janela):
@@ -58,15 +60,25 @@ class Tab_AFD():
         self.frm_resul = tk.LabelFrame(fsp, text='Resultado:', font=("Times new Roman", 15))
         self.lbl_resul = tk.Label(self.frm_resul, text='resultado tal', justify='left', font=("Times new Roman", 15))
 
+        # Imagem Resultado
+        self.frm_img = tk.LabelFrame(fsp, text='Representação Visual:', font=("Times new Roman", 15))
+        self.lbl_img = None
+
 
 
     def teste_insert(self):
-        self.edits_5Tupla[0].insert(0, 'q0, q1, q2, qf')
-        self.edits_5Tupla[1].insert(0, '0, 1')
-        self.edits_5Tupla[2].insert(0, 'q0')
-        self.edits_5Tupla[3].insert(0, 'qf')
-        self.edits_5Tupla[4].insert(0, '01110')
-        self.edits_5Tupla[5].insert('1.0', 'q0, 0, q1\nq1, 1, q2\nq2, 1, q1\nq2, 0, qf\n')
+        # self.edits_5Tupla[0].insert(0, 'q0, q1, q2, qf')
+        # self.edits_5Tupla[1].insert(0, '0, 1')
+        # self.edits_5Tupla[2].insert(0, 'q0')
+        # self.edits_5Tupla[3].insert(0, 'qf')
+        # self.edits_5Tupla[4].insert(0, '01110')
+        # self.edits_5Tupla[5].insert('1.0', 'q0, 0, q1\nq1, 1, q2\nq2, 1, q1\nq2, 0, qf\n')
+        self.edits_5Tupla[0].insert(0, 's0, s1, s2, s3, s4')
+        self.edits_5Tupla[1].insert(0, 'a, b')
+        self.edits_5Tupla[2].insert(0, 's0')
+        self.edits_5Tupla[3].insert(0, 's4')
+        self.edits_5Tupla[4].insert(0, 'ababa')
+        self.edits_5Tupla[5].insert('1.0', 's0, a, s1\ns0, b, s2\ns1, a, s1\ns1, b, s3\ns2, a, s1\ns2, b, s2\ns3, a, s1\ns3, b, s4\ns4, a, s1\ns4, b, s2')
 
     def inicia_prog(self):
         self.dados = {
@@ -79,16 +91,37 @@ class Tab_AFD():
                    elem != '']
         }
 
+        for k in self.dados:
+            print(k, self.dados[k])
+
         auto = Afd()
         auto.set_5upla(self.dados)
         validacao_automato = auto.validar_automato()
+        print(validacao_automato)
         if validacao_automato == 'Ok':
             self.frm_erro.grid_forget()
             self.lbl_resul['text'] = auto.ler_palavra()
             self.lbl_resul.pack()
             self.frm_resul.grid(column=0, row=4, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
+            n_img = 'imgs/imagem_auto.png'
+            dg = DesenhaAutomato(self.dados)
+            dg.plota(n_img)
+
+            self.coloca_img(n_img)
 
         else:
             self.lbl_erro['text'] = validacao_automato
             self.lbl_erro.pack()
             self.frm_erro.grid(column=0, row=3, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
+
+    def coloca_img(self, n_img):
+        img = Image.open(n_img)
+        test = ImageTk.PhotoImage(img)
+        # if self.lbl_img is not None:
+        #     self.lbl_img.pack_forget()
+        self.frm_img.grid(column=0, row=5, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
+        self.lbl_img = tk.Label(self.frm_img, image=test)
+        self.lbl_img.image = test
+        self.lbl_img.pack()
+
+
