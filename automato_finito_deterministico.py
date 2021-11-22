@@ -1,4 +1,4 @@
-class Afd():
+class Afd:
     def __init__(self):
 
         self.dados = None
