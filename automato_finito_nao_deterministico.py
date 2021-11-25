@@ -78,13 +78,14 @@ class Afn():
         # Calculando a primeira linha da tabela de transição do AFD
         afd[lista_chaves[0]] = {}                   
         for t in range(tam_alfabeto):
-            # Criar novo estado
+            # Criar novo estado (junta o nome dos estados referentes a uma possibilidade)
             string_estado = "".join(afn_dicio[lista_chaves[0]][lista_caminhos[t]]) 
 
             # Atribuir o estado na tabela AFD
             afd[lista_chaves[0]][lista_caminhos[t]] = string_estado  
 
-            # Acrescentar string_estado à lista_chaves e lista_novos_estados          
+            # Acrescentar string_estado à lista_chaves e lista_novos_estados
+            # caso a string estado não esteja na lista de chaves
             if string_estado not in lista_chaves:                         
                 lista_novos_estados.append(string_estado)                 
                 lista_chaves.append(string_estado)                       
@@ -92,17 +93,22 @@ class Afn():
         # Calculando as outras linhas da tabela de transição AFD
         while len(lista_novos_estados) != 0:   
             # Pegar o primeiro elemento da lista_novos_estados e fazer sua análise        
-            afd[lista_novos_estados[0]] = {} 
+            afd[lista_novos_estados[0]] = {}
+            
+            # Percorre a string na posição 0 dos novos estados
             for _ in range(len(lista_novos_estados[0])):
+                # Percorre a lista de caminhos
                 for i in range(len(lista_caminhos)):
-                    lista_temp = []                              
+                    lista_temp = []    
+                    # Percorre a string na posição 0 dos novos estados para
+                    # a criação dos outros estados                       
                     for j in range(len(lista_novos_estados[0])):
                         # União dos estados
                         lista_temp += afn_dicio[lista_novos_estados[0][j]][lista_caminhos[i]]  
 
                     # Cria um novo estado de todos os elementos da lista
                     string_estado = ""
-                    string_estado = string_estado.join(lista_temp)    
+                    string_estado = string_estado.join(lista_temp)
 
                     # Acrescentar string_estado à lista_chaves e lista_novos_estados 
                     if string_estado not in lista_chaves:                 
