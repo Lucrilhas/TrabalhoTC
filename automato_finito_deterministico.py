@@ -2,6 +2,7 @@ class Afd:
     def __init__(self):
 
         self.dados = None
+        self.passo_passo = None
     
     def leitura_arquivo(self, nome_arquivo, palavra):
         with open(nome_arquivo, 'r') as arquivo:
@@ -51,6 +52,7 @@ class Afd:
         return 'Ok'
 
     def ler_palavra(self):
+        self.passo_passo = {}
         estado_atual = self.dados['q'][0]
         saida = ''
 
@@ -63,6 +65,7 @@ class Afd:
                     saida += f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
                     estado_atual = regra[2]
                     estado_validacao = True
+                    self.passo_passo[i] = estado_atual
                     break
 
             if not estado_validacao:
