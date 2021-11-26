@@ -81,6 +81,15 @@ class Tab_AFD():
         self.edits_5Tupla[5].insert('1.0', 's0, a, s1\ns0, b, s2\ns1, a, s1\ns1, b, s3\ns2, a, s1\ns2, b, s2\ns3, a, s1\ns3, b, s4\ns4, a, s1\ns4, b, s2')
 
     def inicia_prog(self):
+        rules = self.edits_5Tupla[5].get('1.0', tk.END)
+        aux = ''
+        for num, elem in enumerate(rules):
+            if elem == ',' and rules[num+1] != ' ':
+                aux += ', '
+            else:
+                aux += elem
+        self.edits_5Tupla[5].delete('1.0', tk.END)
+        self.edits_5Tupla[5].insert('1.0', aux)
         self.dados = {
             'Q': self.edits_5Tupla[0].get().replace(',', '').split(),
             'E': self.edits_5Tupla[1].get().replace(',', '').split(),
@@ -117,8 +126,8 @@ class Tab_AFD():
     def coloca_img(self, n_img):
         img = Image.open(n_img)
         test = ImageTk.PhotoImage(img)
-        # if self.lbl_img is not None:
-        #     self.lbl_img.pack_forget()
+        if self.lbl_img is not None:
+            self.lbl_img.pack_forget()
         self.frm_img.grid(column=0, row=5, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
         self.lbl_img = tk.Label(self.frm_img, image=test)
         self.lbl_img.image = test
