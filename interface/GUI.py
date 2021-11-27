@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from Textos import txts
 from interface.tab_AFD import Tab_AFD
+from interface.afd_tab import AFD_Tab
 
 # Constantes
 TAMANHO_PROG = (1000, 800)
@@ -43,7 +44,8 @@ class Programa:
             tabs.add(t, text=txt)
 
         ### Guia do Deterministico
-        tabAFD = Tab_AFD(tab[0])
+        tabAFD = Tab_AFD(tab[2])
 
+        teste = AFD_Tab(tab[0])
         # Inicializacao
         janela.mainloop()

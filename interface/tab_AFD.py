@@ -21,14 +21,14 @@ class Tab_AFD():
 
         # Explicação da quintupla
         frm_5Tupla_explicacao = tk.LabelFrame(fsp, text='Definição de uma 5-Tupla:', font=("Times new Roman", 15))
-        tk.Label(frm_5Tupla_explicacao, text=txts['Exp5Tupla'], justify='left', font=("Times new Roman", 15)).grid(
+        tk.Label(frm_5Tupla_explicacao, text=txts['EXP_5T'], justify='left', font=("Times new Roman", 15)).grid(
             column=0, row=0, sticky='W')
         frm_5Tupla_explicacao.grid(column=0, row=1, sticky='news', padx=(10, 10), pady=(10, 10))
 
         # Coleta dados da quintupla
         self.edits_5Tupla = []  # 0-Conjunto de estados, 1-Alfabeto de entradas, 2-Estado inicial, 3-Estado final, 4-Regras
         frm_5Tupla_coleta = tk.LabelFrame(fsp, text='Valores da sua 5-Tupla:', font=("Times new Roman", 15))
-        for indc, txt in enumerate(txts['Col5Tupla']):
+        for indc, txt in enumerate(txts['VAL_5T']):
             self.edits_5Tupla.append(tk.Entry(frm_5Tupla_coleta, bd=2, width=50))
             tk.Label(frm_5Tupla_coleta, text=txt, justify='left', font=("Times new Roman", 15)).grid(column=0, row=indc,
                                                                                                      sticky='W')
