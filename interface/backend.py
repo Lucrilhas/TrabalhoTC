@@ -31,8 +31,8 @@ def desenha_estados(passos, vals):
     g.vs["label"] = g.vs["name"]
     g.es["label"] = [a for _, a, _ in vals['ft']]
 
-    print(vals)
-    print(passos[0])
+    print(vals['ft'])
+    print(passos[0]['rt'])
 
     for n, passo in enumerate(passos):
         n_img = f"imgs/{n}.png"
@@ -40,14 +40,13 @@ def desenha_estados(passos, vals):
         visu = {
             'vertex_size': 40,
             'bbox': (700, 700),
-            'margin': 20,
-            # layout: auto,
-            # 'edge_width': [4 if c in passo['ea'] else 2 for c in vals['ft'][0]],
-            # 'edge_arrow_size': 2
-            # 'vertex_shape': ['rectangle' if c in vals['f'] else 'circle' for c in vals['q']],
-            # 'vertex_label_color': ['white' if c in vals['f'] else 'black' for c in vals['q']],
-            # 'vertex_color': ['red' if c in vals['f'] else 'yellow' for c in vals['q']],
-            'vertex_color': ['blue' if v == passo['ea'] else 'red' if v in vals['f'] else 'yellow' for v in vals['q']]
+            'margin': 50,
+            'layout': g.layout("circular"),
+            'vertex_label_color': ['white' if v in vals['f'] or v == passo['ea'] else 'black' for v in vals['q']],
+            'vertex_color':     ['blue' if v == passo['ea'] else 'red' if v in vals['f'] else 'yellow' for v in vals['q']],
+            'edge_width':       [6 if r==passo['rt'] else 2 for r in vals['ft']],
+            'edge_arrow_size':  [2 if r==passo['rt'] else 1 for r in vals['ft']],
+            'vertex_shape':     ['rectangle' if v in vals['f'] else 'circle' for v in vals['q']]
         }
 
         ig.plot(g, n_img, **visu)

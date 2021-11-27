@@ -167,7 +167,7 @@ class AFD_Tab:
         p = self.passos[self.passo_atual]
         self.filhos['exp_img']['text'] = f"Passo: {self.passo_atual}\nEstado atual: {p['ea']}\n" \
                                          f"Palavra restante: {p['rp']}\nLetra analisada: {p['rp'][0]}\n" \
-                                         f"Próximo estado: {p['pe']}\n Regra utilizada: {p['rt']}\n"
+                                         f"Próximo estado: {p['pe']}\nRegra utilizada: {p['rt']}\n"
 
         if self.passo_atual == len(self.passos)-1:
             self.filhos['exp_img']['text'] += f"\nResultado: {self.resultado}"

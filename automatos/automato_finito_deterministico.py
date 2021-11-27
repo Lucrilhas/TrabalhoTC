@@ -94,9 +94,9 @@ class Afd:
                     estado_validacao = True
                     break
             if not estado_validacao:
-                return passos, 'Palavra inválida!'
+                return passos, 'Palavra inválida!\nNão há regra no estado atual que aceite essa entrada!'
 
         if estado_atual in self.dados['f']:
             return passos, 'Palavra válida!'
         else:
-            return passos, 'Palavra inválida!'
+            return passos, 'Palavra inválida!\nA linguagem acabou em um estado não final'
