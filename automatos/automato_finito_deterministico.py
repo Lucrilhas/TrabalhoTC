@@ -2,7 +2,6 @@ class Afd:
     def __init__(self):
 
         self.dados = None
-        self.passo_passo = None
     
     def leitura_arquivo(self, nome_arquivo, palavra):
         with open(nome_arquivo, 'r') as arquivo:
@@ -51,27 +50,53 @@ class Afd:
 
         return 'Ok'
 
-    def ler_palavra(self):
-        self.passo_passo = {}
+    # def ler_palavra(self):
+    #     passo_passo = {}
+    #     estado_atual = self.dados['i'][0]
+    #     saida = ''
+    #
+    #     for i, letra in enumerate(self.dados['p']):
+    #         estado_validacao = False
+    #
+    #         for regra in self.dados['ft']:
+    #             if (regra[0] == estado_atual) and (regra[1] == letra):
+    #                 aux = self.dados['p'][i:]
+    #                 saida += f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
+    #                 estado_atual = regra[2]
+    #                 estado_validacao = True
+    #                 passo_passo[i] = estado_atual
+    #                 break
+    #
+    #         if not estado_validacao:
+    #             return '\n # Palavra invalida!'
+    #
+    #     if estado_atual in self.dados['f']:
+    #         return saida + '\n # Palavra valida!'
+    #     else:
+    #         return '\n # Palavra invalida!'
+
+    def processa_palavra(self):
+        passos = []
         estado_atual = self.dados['i'][0]
-        saida = ''
 
         for i, letra in enumerate(self.dados['p']):
             estado_validacao = False
 
             for regra in self.dados['ft']:
                 if (regra[0] == estado_atual) and (regra[1] == letra):
-                    aux = self.dados['p'][i:]
-                    saida += f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
+                    passos.append({
+                        'ea': estado_atual,         # ea = estado atual
+                        'rp': self.dados['p'][i:],  # rp = restante palavra
+                        'pe': regra[2],             # pe = proximo estado
+                        'rt': regra                 # rt = regra de transição utilizada
+                    })
                     estado_atual = regra[2]
                     estado_validacao = True
-                    self.passo_passo[i] = estado_atual
                     break
-
             if not estado_validacao:
-                return '\n # Palavra invalida!'
+                return passos, 'Palavra inválida!'
 
         if estado_atual in self.dados['f']:
-            return saida + '\n # Palavra valida!'
+            return passos, 'Palavra válida!'
         else:
-            return '\n # Palavra invalida!'
+            return passos, 'Palavra inválida!'
