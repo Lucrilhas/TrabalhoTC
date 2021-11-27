@@ -42,8 +42,8 @@ class AFD_Tab:
             'ft_scrl':  tk.Scrollbar(self.pais['5t_fts']),
             'ft':       tk.Text(self.pais['5t_fts'], bd=2, width=50, height=20),
             'btn_ini':  tk.Button(self.pais['acoes'], text="Iniciar", width=10, height=2, command=self.iniciar),
-            'btn_list': tk.Button(self.pais['acoes'], text="Usar Salvo", width=10, height=2, command=self.salvar),
-            'btn_save': tk.Button(self.pais['acoes'], text="Salvar Atual", width=10, height=2, command=self.insere_salvo),
+            'btn_list': tk.Button(self.pais['acoes'], text="Salvar Atual", width=10, height=2, command=self.salvar),
+            'btn_save': tk.Button(self.pais['acoes'], text="Usar Salvo", width=10, height=2, command=self.insere_salvo),
             'cbbox':     ttk.Combobox(self.pais['acoes'], textvariable=vars['cbbox'])
 
         }
@@ -87,17 +87,42 @@ class AFD_Tab:
         self.filhos['cbbox'].grid(column=0, row=1)
 
 
+    # Inicia o processamento do automato
     def iniciar(self):
         print('iniciar')
 
+    # Salva em um arquivo os valores da interface
     def salvar(self):
-        print('salvar')
+        salvar_afd(self.get_valores(False), self.filhos['cbbox'].get())
 
+
+    def get_valores(self, puro):
+        if puro:
+            valores = {
+                'q': self.filhos['edts'][0].get().replace(',', '').split(),
+                'e': self.filhos['edts'][1].get().replace(',', '').split(),
+                'i': self.filhos['edts'][2].get().replace(',', '').split(),
+                'f': self.filhos['edts'][3].get().replace(',', '').split(),
+                'p': self.filhos['edts'][4].get().replace(',', '').split(),
+                'ft': [elem.replace(',', '').split() for elem in self.filhos['ft'].get('1.0', tk.END).split('\n') if elem != '']
+            }
+        else:
+            valores = {
+                'q': self.filhos['edts'][0].get(),
+                'e': self.filhos['edts'][1].get(),
+                'i': self.filhos['edts'][2].get(),
+                'f': self.filhos['edts'][3].get(),
+                'p': self.filhos['edts'][4].get(),
+                'ft': self.filhos['ft'].get('1.0', tk.END)
+            }
+        return valores
+
+    # Pega o arquivo salva e insere seus valores na interface
     def insere_salvo(self):
         if self.filhos['cbbox'].current() != -1:
             file = get_afd_tests()[self.filhos['cbbox'].current()]
-            self.filhos['edts'][0].insert(0, file['Q'])
-            self.filhos['edts'][1].insert(0, file['E'])
+            self.filhos['edts'][0].insert(0, file['q'])
+            self.filhos['edts'][1].insert(0, file['e'])
             self.filhos['edts'][2].insert(0, file['i'])
             self.filhos['edts'][3].insert(0, file['f'])
             # self.filhos['edts'][4].insert(0, file['ft']) # Palavra
