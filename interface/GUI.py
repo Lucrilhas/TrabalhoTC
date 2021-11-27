@@ -2,7 +2,6 @@
 import tkinter as tk
 from tkinter import ttk
 from Textos import txts
-from interface.tab_AFD import Tab_AFD
 from interface.afd_tab import AFD_Tab
 
 # Constantes
@@ -44,8 +43,8 @@ class Programa:
             tabs.add(t, text=txt)
 
         ### Guia do Deterministico
-        tabAFD = Tab_AFD(tab[2])
+        AFD_Tab(tab[0])
 
-        teste = AFD_Tab(tab[0])
+
         # Inicializacao
         janela.mainloop()

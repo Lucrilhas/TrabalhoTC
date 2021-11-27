@@ -4,11 +4,11 @@ class DesenhaAutomato:
     def __init__(self, op):
         self.op = op
         self.g = ig.Graph(directed=True)
-        self.g.add_vertices(op['Q'])
+        self.g.add_vertices(op['q'])
         # self.g.degree(mode="in")
-        self.g.add_edges([v1, v2] for v1, _, v2 in op['FT'])
+        self.g.add_edges([v1, v2] for v1, _, v2 in op['ft'])
         self.g.vs["label"] = self.g.vs["name"]
-        self.g.es["label"] = [a for _, a, _ in op['FT']]
+        self.g.es["label"] = [a for _, a, _ in op['ft']]
 
     def plota(self, nome_arq):
         visu = {
@@ -16,10 +16,10 @@ class DesenhaAutomato:
             'bbox': (900, 900),
             'margin': 20,
             # layout: auto,
-            'edge_width': [3 for _ in enumerate(self.op['FT'])],
-            'vertex_color': ['red' if c in self.op['F'] else 'yellow' for c in self.op['Q']],
-            'vertex_shape': ['rectangle' if c in self.op['F'] else 'circle' for c in self.op['Q']],
-            'vertex_label_color': ['white' if c in self.op['F'] else 'black' for c in self.op['Q']],
+            'edge_width': [3 for _ in enumerate(self.op['ft'])],
+            'vertex_color': ['red' if c in self.op['F'] else 'yellow' for c in self.op['q']],
+            'vertex_shape': ['rectangle' if c in self.op['f'] else 'circle' for c in self.op['q']],
+            'vertex_label_color': ['white' if c in self.op['f'] else 'black' for c in self.op['q']],
             'edge_arrow_size': 2
         }
         ig.plot(self.g, nome_arq, **visu)

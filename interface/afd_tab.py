@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 from Textos import txts
 from automatos.automato_finito_deterministico import Afd
 from interface.ScrollFrame import ScrollableFrame
-from grafos import DesenhaAutomato
 from PIL import ImageTk, Image
 from interface.backend import *
 
@@ -28,7 +27,6 @@ class AFD_Tab:
             '5t_vals':  tk.LabelFrame(fsf, text='Valores da sua 5-Tupla:', font=TIMES15),
             '5t_fts':   tk.LabelFrame(fsf, text='Regras de Transição da sua 5-Tupla:', font=TIMES15),
             'acoes':    tk.LabelFrame(fsf, text='Ações:', font=TIMES15),
-            '5t_error': tk.LabelFrame(fsf, text='Erro! :', font=TIMES15),
             'result':   tk.LabelFrame(fsf, text='Resultado:', font=TIMES15),
             'imgs':     tk.LabelFrame(fsf, text='Representação Visual:', font=TIMES15)
         }
@@ -48,10 +46,6 @@ class AFD_Tab:
 
         }
 
-        # Filhos dos filhos
-        self.netos = {
-
-        }
         self.config_iniciais()
         self.coloca_iniciais()
 
@@ -81,20 +75,32 @@ class AFD_Tab:
             self.filhos['5t_vals'][n].grid(column=0, row=n, sticky='nw')    # Labels valores
             self.filhos['edts'][n].grid(column=1, row=n, sticky='nw')       # Edits valores
 
-        self.filhos['btn_ini'].grid(column=2, row=0)
-        self.filhos['btn_list'].grid(column=0, row=0)
-        self.filhos['btn_save'].grid(column=1, row=0)
-        self.filhos['cbbox'].grid(column=0, row=1)
+        self.filhos['btn_ini'].grid(column=2, row=0)    # Botao de iniar processamento
+        self.filhos['btn_list'].grid(column=0, row=0)   # Botao de import arquivo
+        self.filhos['btn_save'].grid(column=1, row=0)   # Botao de export arquivo
+        self.filhos['cbbox'].grid(column=0, row=1)      # Combobox de select arquivo
 
 
     # Inicia o processamento do automato
     def iniciar(self):
-        print('iniciar')
+        valores = self.get_valores(True)
+        auto_afd = Afd()
+        auto_afd.set_5upla(valores)
+        #auto_afd.mostrar_dados()
+        valid = auto_afd.validar_automato()
+
+        if valid == 'Ok':
+            a = auto_afd.ler_palavra()
+            print(a)
+        else:
+            messagebox.showerror("Palavra Inválida!", valid)
 
     # Salva em um arquivo os valores da interface
     def salvar(self):
-        salvar_afd(self.get_valores(False), self.filhos['cbbox'].get())
-
+        if self.filhos['cbbox'].current() == -1:
+            salvar_afd(self.get_valores(False), self.filhos['cbbox'].get())
+        elif messagebox.askokcancel('Certeza?', 'Você tem certeza que quer reescrever esse arquivo?'):
+            salvar_afd(self.get_valores(False), self.filhos['cbbox'].get())
 
     def get_valores(self, puro):
         if puro:

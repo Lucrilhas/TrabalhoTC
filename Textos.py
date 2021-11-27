@@ -2,7 +2,7 @@ txts = {
     'Guias': [
         'Deterministico',
         'Não Deterministico',
-        'Teste'
+        # 'Teste'
         # 'Deterministico de Pilha',
         # 'Não Deterministicos de Pilha'
 

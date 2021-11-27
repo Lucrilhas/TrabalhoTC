@@ -21,47 +21,47 @@ class Afd:
 
     def mostrar_dados(self):
         print(" === Dados gerais do automato ===\n")
-        print(f" * Alfabeto: {self.dados['E']}")
-        print(f" * Estados: {self.dados['Q']}")
-        print(f" * Estado Inicial: {self.dados['q']}")
-        print(f" * Estados Finais: {self.dados['F']}")
-        print(f" * Palavra: {self.dados['P']}")
+        print(f" * Alfabeto: {self.dados['e']}")
+        print(f" * Estados: {self.dados['q']}")
+        print(f" * Estado Inicial: {self.dados['i']}")
+        print(f" * Estados Finais: {self.dados['f']}")
+        print(f" * Palavra: {self.dados['p']}")
 
         print("\n === Regras de transicao ===\n")
-        for regra in self.dados['FT']:
+        for regra in self.dados['ft']:
             print(' - ', regra)
 
     def validar_automato(self):
-        if len(self.dados['Q']) == 0:
+        if len(self.dados['q']) == 0:
             return 'Conjunto de estados vazio!'
 
-        for ef in self.dados['F']:
-            if ef not in self.dados['Q']:
+        for ef in self.dados['f']:
+            if ef not in self.dados['q']:
                 return 'Estados finais devem estar no conjunto de estados atingiveis!'
 
-        for regra in self.dados['FT']:
-            if regra[0] not in self.dados['Q']:
+        for regra in self.dados['ft']:
+            if regra[0] not in self.dados['q']:
                 return 'Os estados iniciais das regras devem estar no conjunto de estados atingiveis!'
 
-            if regra[1] not in self.dados['E']:
+            if regra[1] not in self.dados['e']:
                 return 'Os simbolos das regras devem estar no alfabeto!'
 
-            if regra[2] not in self.dados['Q']:
+            if regra[2] not in self.dados['q']:
                 return 'Os estados alvo das regras devem estar no conjunto de estados atingíveis!'
 
         return 'Ok'
 
     def ler_palavra(self):
         self.passo_passo = {}
-        estado_atual = self.dados['q'][0]
+        estado_atual = self.dados['i'][0]
         saida = ''
 
-        for i, letra in enumerate(self.dados['P']):
+        for i, letra in enumerate(self.dados['p']):
             estado_validacao = False
 
-            for regra in self.dados['FT']:
+            for regra in self.dados['ft']:
                 if (regra[0] == estado_atual) and (regra[1] == letra):
-                    aux = self.dados['P'][i:]
+                    aux = self.dados['p'][i:]
                     saida += f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
                     estado_atual = regra[2]
                     estado_validacao = True
@@ -71,7 +71,7 @@ class Afd:
             if not estado_validacao:
                 return '\n # Palavra invalida!'
 
-        if estado_atual in self.dados['F']:
+        if estado_atual in self.dados['f']:
             return saida + '\n # Palavra valida!'
         else:
             return '\n # Palavra invalida!'

@@ -3,7 +3,6 @@ from tkinter import ttk
 from Textos import txts
 from automatos.automato_finito_deterministico import Afd
 from interface.ScrollFrame import ScrollableFrame
-from grafos import DesenhaAutomato
 from PIL import ImageTk, Image
 
 class Tab_AFD():
@@ -67,18 +66,18 @@ class Tab_AFD():
 
 
     def teste_insert(self):
-        # self.edits_5Tupla[0].insert(0, 'q0, q1, q2, qf')
-        # self.edits_5Tupla[1].insert(0, '0, 1')
-        # self.edits_5Tupla[2].insert(0, 'q0')
-        # self.edits_5Tupla[3].insert(0, 'qf')
-        # self.edits_5Tupla[4].insert(0, '01110')
-        # self.edits_5Tupla[5].insert('1.0', 'q0, 0, q1\nq1, 1, q2\nq2, 1, q1\nq2, 0, qf\n')
-        self.edits_5Tupla[0].insert(0, 's0, s1, s2, s3, s4')
-        self.edits_5Tupla[1].insert(0, 'a, b')
-        self.edits_5Tupla[2].insert(0, 's0')
-        self.edits_5Tupla[3].insert(0, 's4')
-        self.edits_5Tupla[4].insert(0, 'ababa')
-        self.edits_5Tupla[5].insert('1.0', 's0, a, s1\ns0, b, s2\ns1, a, s1\ns1, b, s3\ns2, a, s1\ns2, b, s2\ns3, a, s1\ns3, b, s4\ns4, a, s1\ns4, b, s2')
+        self.edits_5Tupla[0].insert(0, 'q0, q1, q2, qf')
+        self.edits_5Tupla[1].insert(0, '0, 1')
+        self.edits_5Tupla[2].insert(0, 'q0')
+        self.edits_5Tupla[3].insert(0, 'qf')
+        self.edits_5Tupla[4].insert(0, '01110')
+        self.edits_5Tupla[5].insert('1.0', 'q0, 0, q1\nq1, 1, q2\nq2, 1, q1\nq2, 0, qf\n')
+        # self.edits_5Tupla[0].insert(0, 's0, s1, s2, s3, s4')
+        # self.edits_5Tupla[1].insert(0, 'a, b')
+        # self.edits_5Tupla[2].insert(0, 's0')
+        # self.edits_5Tupla[3].insert(0, 's4')
+        # self.edits_5Tupla[4].insert(0, 'ababa')
+        # self.edits_5Tupla[5].insert('1.0', 's0, a, s1\ns0, b, s2\ns1, a, s1\ns1, b, s3\ns2, a, s1\ns2, b, s2\ns3, a, s1\ns3, b, s4\ns4, a, s1\ns4, b, s2')
 
     def inicia_prog(self):
         rules = self.edits_5Tupla[5].get('1.0', tk.END)
@@ -91,12 +90,12 @@ class Tab_AFD():
         self.edits_5Tupla[5].delete('1.0', tk.END)
         self.edits_5Tupla[5].insert('1.0', aux)
         self.dados = {
-            'Q': self.edits_5Tupla[0].get().replace(',', '').split(),
-            'E': self.edits_5Tupla[1].get().replace(',', '').split(),
-            'q': self.edits_5Tupla[2].get().replace(',', '').split(),
-            'F': self.edits_5Tupla[3].get().replace(',', '').split(),
-            'P': self.edits_5Tupla[4].get(),
-            'FT': [elem.replace(',', '').split() for elem in self.edits_5Tupla[5].get('1.0', tk.END).split('\n') if
+            'q': self.edits_5Tupla[0].get().replace(',', '').split(),
+            'e': self.edits_5Tupla[1].get().replace(',', '').split(),
+            'i': self.edits_5Tupla[2].get().replace(',', '').split(),
+            'f': self.edits_5Tupla[3].get().replace(',', '').split(),
+            'p': self.edits_5Tupla[4].get(),
+            'ft': [elem.replace(',', '').split() for elem in self.edits_5Tupla[5].get('1.0', tk.END).split('\n') if
                    elem != '']
         }
 
@@ -113,10 +112,10 @@ class Tab_AFD():
             self.lbl_resul.pack()
             self.frm_resul.grid(column=0, row=4, columnspan=2, sticky='news', padx=(10, 10), pady=(10, 10))
             n_img = 'imgs/imagem_auto.png'
-            dg = DesenhaAutomato(self.dados)
-            dg.plota(n_img)
+            # dg = DesenhaAutomato(self.dados)
+            # dg.plota(n_img)
 
-            self.coloca_img(n_img)
+            # self.coloca_img(n_img)
 
         else:
             self.lbl_erro['text'] = validacao_automato

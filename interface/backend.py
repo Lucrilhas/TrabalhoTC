@@ -6,8 +6,8 @@ def get_afd_tests():
         with open(os.path.join('automatos/testes/testes_afd', filename), 'r') as f:
             files.append({
                 'name': filename,
-                'q': f.readline(),
                 'e': f.readline(),
+                'q': f.readline(),
                 'i': f.readline(),
                 'f': f.readline(),
                 'ft': f.readlines(),
