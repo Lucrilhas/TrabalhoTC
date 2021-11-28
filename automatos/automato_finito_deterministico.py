@@ -2,18 +2,6 @@ class Afd:
     def __init__(self):
 
         self.dados = None
-    
-    def leitura_arquivo(self, nome_arquivo, palavra):
-        with open(nome_arquivo, 'r') as arquivo:
-            dados_automato = [linha.split(',') for linha in [linha.replace('\n', '') for linha in arquivo]]
-            self.dados = {
-                'Q': dados_automato[1],
-                'E': dados_automato[0],
-                'q': dados_automato[2],
-                'F': dados_automato[3],
-                'P': palavra,
-                'FT': dados_automato[4:].copy()
-            }
         
     def set_5upla(self, dados):
         self.dados = dados

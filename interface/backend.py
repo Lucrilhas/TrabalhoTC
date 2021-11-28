@@ -8,14 +8,13 @@ def get_tests(path):
         with open(os.path.join(path, filename), 'r') as f:
             files.append({
                 'name': filename,
-                'e': f.readline(),
-                'q': f.readline(),
-                'i': f.readline(),
-                'f': f.readline(),
-                'p': f.readline(),
+                'e': f.readline().replace('\n', ''),
+                'q': f.readline().replace('\n', ''),
+                'i': f.readline().replace('\n', ''),
+                'f': f.readline().replace('\n', ''),
+                'p': f.readline().replace('\n', ''),
                 'ft': f.readlines(),
             })
-
     return files
 
 def salvar_auto(valores, nome, path):

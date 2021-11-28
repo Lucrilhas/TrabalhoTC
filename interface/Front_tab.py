@@ -104,7 +104,7 @@ class Front:
     def iniciar(self):
         valores = self.get_valores(True)
         self.infos['auto'].set_5upla(valores)
-        self.infos['auto'].mostrar_dados()
+        # self.infos['auto'].mostrar_dados()
         valid = self.infos['auto'].validar_automato()
 
         if valid == 'Ok':
