@@ -50,31 +50,6 @@ class Afd:
 
         return 'Ok'
 
-    # def ler_palavra(self):
-    #     passo_passo = {}
-    #     estado_atual = self.dados['i'][0]
-    #     saida = ''
-    #
-    #     for i, letra in enumerate(self.dados['p']):
-    #         estado_validacao = False
-    #
-    #         for regra in self.dados['ft']:
-    #             if (regra[0] == estado_atual) and (regra[1] == letra):
-    #                 aux = self.dados['p'][i:]
-    #                 saida += f' - Estado atual: {estado_atual} | Restante palavra: {aux} | Para o estado: {regra[2]}\n'
-    #                 estado_atual = regra[2]
-    #                 estado_validacao = True
-    #                 passo_passo[i] = estado_atual
-    #                 break
-    #
-    #         if not estado_validacao:
-    #             return '\n # Palavra invalida!'
-    #
-    #     if estado_atual in self.dados['f']:
-    #         return saida + '\n # Palavra valida!'
-    #     else:
-    #         return '\n # Palavra invalida!'
-
     def processa_palavra(self):
         passos = []
         estado_atual = self.dados['i'][0]
@@ -87,6 +62,7 @@ class Afd:
                     passos.append({
                         'ea': estado_atual,         # ea = estado atual
                         'rp': self.dados['p'][i:],  # rp = restante palavra
+                        'la': self.dados['p'][i],  # la = letra analisada
                         'pe': regra[2],             # pe = proximo estado
                         'rt': regra                 # rt = regra de transição utilizada
                     })
@@ -94,9 +70,23 @@ class Afd:
                     estado_validacao = True
                     break
             if not estado_validacao:
+                passos.append({
+                    'ea': estado_atual,         # ea = estado atual
+                    'rp': self.dados['p'][i:],  # rp = restante palavra
+                    'la': self.dados['p'][i],  # la = letra analisada
+                    'pe': 'não há',             # pe = proximo estado
+                    'rt': 'não há'                 # rt = regra de transição utilizada
+                    })
                 return passos, 'Palavra inválida!\nNão há regra no estado atual que aceite essa entrada!'
 
         if estado_atual in self.dados['f']:
             return passos, 'Palavra válida!'
         else:
-            return passos, 'Palavra inválida!\nA linguagem acabou em um estado não final'
+            passos.append({
+                'ea': estado_atual,  # ea = estado atual
+                'rp': 'Acabou',  # rp = restante palavra
+                'la': 'Não há', # la = letra analisada
+                'pe': 'Não há',  # pe = proximo estado
+                'rt': 'Não há'  # rt = regra de transição utilizada
+            })
+            return passos, 'Palavra inválida!\nA linguagem acabou em um estado não final!'

@@ -166,7 +166,7 @@ class AFD_Tab:
         # Label explcação
         p = self.passos[self.passo_atual]
         self.filhos['exp_img']['text'] = f"Passo: {self.passo_atual}\nEstado atual: {p['ea']}\n" \
-                                         f"Palavra restante: {p['rp']}\nLetra analisada: {p['rp'][0]}\n" \
+                                         f"Palavra restante: {p['rp']}\nLetra analisada: {p['la']}\n" \
                                          f"Próximo estado: {p['pe']}\nRegra utilizada: {p['rt']}\n"
 
         if self.passo_atual == len(self.passos)-1:

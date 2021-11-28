@@ -3,10 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 from Textos import txts
 from interface.afd_tab import AFD_Tab
-# from bk.tab_AFD import Tab_AFD
 
 # Constantes
-TAMANHO_PROG = (1000, 800)
+TAMANHO_PROG = (1000, 1000)
 AZUL_CLARO = '#ADD8E6'
 
 
@@ -45,7 +44,6 @@ class Programa:
 
         ### Guia do Deterministico
         AFD_Tab(tab[0])
-        # Tab_AFD(tab[1])
 
         # Inicializacao
         janela.mainloop()
