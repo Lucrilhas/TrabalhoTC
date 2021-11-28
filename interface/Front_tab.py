@@ -103,12 +103,13 @@ class Front:
 
     def iniciar(self):
         valores = self.get_valores(True)
-        self.infos['auto'].set_5upla(valores)
-        # self.infos['auto'].mostrar_dados()
-        valid = self.infos['auto'].validar_automato()
+        auto = self.infos['auto'](valores)
+
+        # auto.print_tupla()
+        valid = auto.valida_Tupla()
 
         if valid == 'Ok':
-            self.passos, self.resultado = self.infos['auto'].processa_palavra()
+            self.passos, self.resultado, valores = auto.start()
             self.imgs = desenha_estados(self.passos, valores)
             self.passo_atual = 0
             self.inicia_resultado()

@@ -1,7 +1,6 @@
 import tkinter as tk
-from tkinter import ttk
 from Textos import txts
-from automatos.automato_finito_deterministico import Afd
+from bk.automato_finito_deterministico import Afd
 from interface.ScrollFrame import ScrollableFrame
 from PIL import ImageTk, Image
 
