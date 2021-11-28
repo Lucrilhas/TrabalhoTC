@@ -2,10 +2,10 @@ import os
 import igraph as ig
 from PIL import ImageTk, Image
 
-def get_afd_tests():
+def get_tests(path):
     files = []
-    for filename in os.listdir('automatos/testes/testes_afd'):
-        with open(os.path.join('automatos/testes/testes_afd', filename), 'r') as f:
+    for filename in os.listdir(path):
+        with open(os.path.join(path, filename), 'r') as f:
             files.append({
                 'name': filename,
                 'e': f.readline(),
@@ -17,8 +17,8 @@ def get_afd_tests():
 
     return files
 
-def salvar_afd(valores, nome):
-    with open(f'automatos/testes/testes_afd/{nome}.txt', 'w+') as arq:
+def salvar_auto(valores, nome, path):
+    with open(f'{path}/{nome}.txt', 'w+') as arq:
         for l in valores:
             arq.write(valores[l])
 
@@ -30,9 +30,6 @@ def desenha_estados(passos, vals):
     g.add_edges([v1, v2] for v1, _, v2 in vals['ft'])
     g.vs["label"] = g.vs["name"]
     g.es["label"] = [a for _, a, _ in vals['ft']]
-
-    print(vals['ft'])
-    print(passos[0]['rt'])
 
     for n, passo in enumerate(passos):
         n_img = f"imgs/{n}.png"
