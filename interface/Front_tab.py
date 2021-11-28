@@ -104,7 +104,7 @@ class Front:
     def iniciar(self):
         valores = self.get_valores(True)
         self.infos['auto'].set_5upla(valores)
-        # self.infos['auto'].mostrar_dados()
+        self.infos['auto'].mostrar_dados()
         valid = self.infos['auto'].validar_automato()
 
         if valid == 'Ok':
@@ -148,6 +148,7 @@ class Front:
             self.filhos['edts'][1].insert(0, file['e'])
             self.filhos['edts'][2].insert(0, file['i'])
             self.filhos['edts'][3].insert(0, file['f'])
+            self.filhos['edts'][4].insert(0, file['p'])
             for ft in file['ft']:
                 self.filhos['ft'].insert(tk.END, ft)
 

@@ -12,6 +12,7 @@ def get_tests(path):
                 'q': f.readline(),
                 'i': f.readline(),
                 'f': f.readline(),
+                'p': f.readline(),
                 'ft': f.readlines(),
             })
 
