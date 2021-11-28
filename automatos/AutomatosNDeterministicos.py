@@ -118,5 +118,4 @@ class AutomatoNDeterministico(AutomatoDeterministico):
         afn_dicio = self.regras_para_dicionario()
         self.converter_para_afd(afn_dicio)
         p, m, t= self.executa_afd()
-        print(t)
         return p, m, t
