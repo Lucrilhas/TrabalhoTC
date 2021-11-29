@@ -143,9 +143,6 @@ class Front:
             else:
                 messagebox.showerror("Erro!", "Escreva um nome válido!")
         elif messagebox.askokcancel('Certeza?', 'Você tem certeza que quer reescrever esse arquivo?'):
-            print(self.get_valores())
-            print(self.infos['indc_txt'])
-            print(self.filhos['cbbox'].get())
             self.be.insere_valor(self.get_valores(), self.infos['indc_txt'], self.filhos['cbbox'].get())
         self.filhos['cbbox']['values'] = [n['nome'] for n in self.be.get_valores(self.infos['indc_txt'])]
 

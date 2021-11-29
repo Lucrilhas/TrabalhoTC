@@ -38,13 +38,13 @@ def desenha_estados(passos, vals):
         visu = {
             'vertex_size': 40,
             'bbox': (700, 700),
-            'margin': 50,
+            'margin': 150,
             'layout': g.layout("circular"),
             'vertex_label_color': ['white' if v in vals['f'] or v == passo['ea'] else 'black' for v in vals['q']],
             'vertex_color': ['blue' if v == passo['ea'] else 'red' if v in vals['f'] else 'yellow' for v in vals['q']],
             'edge_width': [6 if r == passo['rt'] else 2 for r in vals['ft']],
             'edge_arrow_size': [2 if r == passo['rt'] else 1 for r in vals['ft']],
-            'vertex_shape': ['rectangle' if v in vals['f'] else 'circle' for v in vals['q']]
+            'vertex_shape': ['rectangle' if v in vals['f'] else 'circle' for v in vals['q']],
         }
 
         ig.plot(g, n_img, **visu)
@@ -66,7 +66,7 @@ def desenha_ini(vals):
     visu = {
         'vertex_size': 40,
         'bbox': (700, 700),
-        'margin': 50,
+        'margin': 150,
         'layout': g.layout("circular"),
         'vertex_label_color': ['white' if v in vals['f'] else 'black' for v in vals['q']],
         'vertex_color': ['blue' if v in vals['i'] else 'red' if v in vals['f'] else 'yellow' for v in vals['q']],

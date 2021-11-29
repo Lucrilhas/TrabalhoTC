@@ -77,9 +77,12 @@ class AutomatoNDeterministico(AutomatoDeterministico):
                         # União dos estados
                         lista_temp += afn_dicio[lista_novos_estados[0][j]][lista_caminhos[i]]
 
-                        # Cria um novo estado de todos os elementos da lista
+                    sequencia = []
+                    [sequencia.append(i) for i in lista_temp if not sequencia.count(i)]
+
+                    # Cria um novo estado de todos os elementos da lista
                     string_estado = ""
-                    string_estado = string_estado.join(lista_temp)
+                    string_estado = string_estado.join(sequencia)
 
                     # Acrescentar string_estado à lista_chaves e lista_novos_estados
                     if string_estado not in lista_chaves:
