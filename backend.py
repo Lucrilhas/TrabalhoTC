@@ -1,6 +1,7 @@
+import os
 import igraph as ig
-import pandas as pd
 from PIL import ImageTk, Image
+import pandas as pd
 
 
 class BackEnd():
@@ -8,12 +9,16 @@ class BackEnd():
         self.db = pd.read_csv('automatos/casos.csv')
 
     def insere_valor(self, valores, origem, nome):
-        if nome not in self.db['nome'].values:
-            valores['tipo'] = origem
-            valores['nome'] = nome
-            valores['p'] = f"'{valores['p']}'"
-            self.db = self.db.append(valores, ignore_index=True)
-            self.db.to_csv('automatos/casos.csv', index=False)
+        valores['tipo'] = origem
+        valores['nome'] = nome
+        valores['p'] = f"'{valores['p']}'"
+
+        if nome in self.db['nome'].values:
+            self.db.drop(self.db[(self.db['tipo'] == 'AFND') & (self.db['nome'] == 'afn03')].index[0], inplace=True)
+            
+        self.db = self.db.append(valores, ignore_index=True)
+        self.db.to_csv('automatos/casos.csv', index=False)
+        
 
     def get_valores(self, tipo):
         return [dic for dic in pd.read_csv('automatos/casos.csv').to_dict('records') if dic['tipo'] == tipo]

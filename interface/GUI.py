@@ -1,10 +1,9 @@
 # Bibliotecas
 import tkinter as tk
 from tkinter import ttk
-
 from Textos import txts
-from interface.AFD_Front import AFD_front
 from interface.AFND_Front import AFND_front
+from interface.AFD_Front import AFD_front
 
 # Constantes
 TAMANHO_PROG = (1000, 1000)

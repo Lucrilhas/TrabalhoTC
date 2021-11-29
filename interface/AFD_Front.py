@@ -1,6 +1,5 @@
-from automatos.AutomatosDeterministicos import AutomatoDeterministico
 from interface.Front_tab import Front
-
+from automatos.AutomatosDeterministicos import AutomatoDeterministico
 
 class AFD_front(Front):
     def __init__(self, janela):
