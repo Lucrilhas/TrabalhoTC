@@ -1,30 +1,26 @@
 import os
 import igraph as ig
 from PIL import ImageTk, Image
+import pandas as pd
 
-def get_tests(path):
-    files = []
-    for filename in os.listdir(path):
-        with open(os.path.join(path, filename), 'r') as f:
-            files.append({
-                'name': filename,
-                'e': f.readline().replace('\n', ''),
-                'q': f.readline().replace('\n', ''),
-                'i': f.readline().replace('\n', ''),
-                'f': f.readline().replace('\n', ''),
-                'p': f.readline().replace('\n', ''),
-                'ft': f.readlines(),
-            })
-    return files
 
-def salvar_auto(valores, nome, path):
-    with open(f'{path}/{nome}.txt', 'w+') as arq:
-        arq.write(valores['e'] + '\n')
-        arq.write(valores['q'] + '\n')
-        arq.write(valores['i'] + '\n')
-        arq.write(valores['f'] + '\n')
-        arq.write(valores['p'] + '\n')
-        arq.write(valores['ft'] + '\n')
+
+class BackEnd():
+    def __init__(self):
+        self.db = pd.read_csv('automatos/casos.csv')
+
+    def insere_valor(self, valores, origem, nome):
+        if nome not in self.db['nome'].values:
+            valores['tipo'] = origem
+            valores['nome'] = nome
+            valores['p'] = f"'{valores['p']}'"
+            self.db = self.db.append(valores, ignore_index=True)
+            self.db.to_csv('automatos/casos.csv', index=False)
+
+    def get_valores(self, tipo):
+        return [dic for dic in pd.read_csv('automatos/casos.csv').to_dict('records') if dic['tipo'] == tipo]
+
+
             
 
 def desenha_estados(passos, vals):

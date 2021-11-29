@@ -2,13 +2,14 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from Textos import txts
 from interface.ScrollFrame import ScrollableFrame
-from interface.backend import *
+from backend import *
 
 TIMES15 = ("Times new Roman", 15)
 
 class Front:
     def __init__(self, janela, infos):
         self.infos = infos
+        self.be = BackEnd()
 
         # Variavei comuns
         self.passo_atual = 0    # Indice de imagem/label atual
@@ -61,8 +62,8 @@ class Front:
         self.filhos['ft'].configure(yscrollcommand=self.filhos['ft_scrl'].set)  # Config Scroll memo
         self.filhos['ft_scrl'].config(command=self.filhos['ft'].yview)  # Config Scroll memo
 
-        self.filhos['cbbox']['values'] = [n['name'].replace('.txt', '') for n in get_tests(infos['path_tests'])]  # Lista de salvos
-        self.pais['acoes'].grid_columnconfigure(3, weight=1)    # Pos btn limpar pro lado
+        self.filhos['cbbox']['values'] = [n['nome'] for n in self.be.get_valores(self.infos['indc_txt'])]   # Lista de salvos
+        self.pais['acoes'].grid_columnconfigure(3, weight=1)    # Pro btn limpar ir pro lado
 
         # Colocar widgets iniciais
         # Pais
@@ -90,19 +91,19 @@ class Front:
         self.filhos['cbbox'].grid(column=0, row=1, columnspan=2)  # Combobox de select arquivo
 
 
-    def get_valores(self, puro):
+    def get_valores(self):
         valores = {
-            'q': self.filhos['edts'][0].get().replace(',', '').split() if puro else self.filhos['edts'][0].get(),
-            'e': self.filhos['edts'][1].get().replace(',', '').split() if puro else self.filhos['edts'][1].get(),
-            'i': self.filhos['edts'][2].get().replace(',', '').split() if puro else self.filhos['edts'][2].get(),
-            'f': self.filhos['edts'][3].get().replace(',', '').split() if puro else self.filhos['edts'][3].get(),
+            'q': self.filhos['edts'][0].get().replace(' ', '').split(','),
+            'e': self.filhos['edts'][1].get().replace(' ', '').split(','),
+            'i': self.filhos['edts'][2].get().replace(' ', '').split(','),
+            'f': self.filhos['edts'][3].get().replace(' ', '').split(','),
             'p': self.filhos['edts'][4].get(),
-            'ft': [elem.replace(',', '').split() for elem in self.filhos['ft'].get('1.0', tk.END).split('\n') if elem != ''] if puro else self.filhos['ft'].get('1.0', tk.END)
+            'ft': [elem.replace(' ', '').split(',') for elem in self.filhos['ft'].get('1.0', tk.END).split('\n') if elem != '']
         }
         return valores
 
     def iniciar(self):
-        valores = self.get_valores(True)
+        valores = self.get_valores()
         auto = self.infos['auto'](valores)
 
         # auto.print_tupla()
@@ -134,24 +135,25 @@ class Front:
     def salvar(self):
         if self.filhos['cbbox'].current() == -1:
             if self.filhos['cbbox'].get().replace(' ', '') != '':
-                salvar_auto(self.get_valores(False), self.filhos['cbbox'].get(), self.infos['path_tests'])
+                self.be.insere_valor(self.get_valores(), self.infos['indc_txt'], self.filhos['cbbox'].get())
             else:
                 messagebox.showerror("Erro!", "Escreva um nome válido!")
         elif messagebox.askokcancel('Certeza?', 'Você tem certeza que quer reescrever esse arquivo?'):
-            salvar_auto(self.get_valores(False), self.filhos['cbbox'].get(), self.infos['path_tests'])
+            self.be.insere_valor(self.get_valores(), self.infos['indc_txt'], self.filhos['cbbox'].get())
+        self.filhos['cbbox']['values'] = [n['nome'] for n in self.be.get_valores(self.infos['indc_txt'])]
 
     # Pega o arquivo salva e insere seus valores na interface
     def insere_salvo(self):
         self.limpar()
         if self.filhos['cbbox'].current() != -1:
-            file = get_tests(self.infos['path_tests'])[self.filhos['cbbox'].current()]
-            self.filhos['edts'][0].insert(0, file['q'])
-            self.filhos['edts'][1].insert(0, file['e'])
-            self.filhos['edts'][2].insert(0, file['i'])
-            self.filhos['edts'][3].insert(0, file['f'])
-            self.filhos['edts'][4].insert(0, file['p'])
-            for ft in file['ft']:
-                self.filhos['ft'].insert(tk.END, ft)
+            vals = self.be.get_valores(self.infos['indc_txt'])[self.filhos['cbbox'].current()]
+            print(vals)
+            self.filhos['edts'][0].insert(0, vals['q'].replace('\'', '').replace('[', '').replace(']', ''))
+            self.filhos['edts'][1].insert(0, vals['e'].replace('\'', '').replace('[', '').replace(']', ''))
+            self.filhos['edts'][2].insert(0, vals['i'].replace('\'', '').replace('[', '').replace(']', ''))
+            self.filhos['edts'][3].insert(0, vals['f'].replace('\'', '').replace('[', '').replace(']', ''))
+            self.filhos['edts'][4].insert(0, vals['p'].replace('\'', ''))
+            self.filhos['ft'].insert(tk.END, vals['ft'][1:-2].replace('\'', '').replace('[', '').replace('], ', '\n'))
 
         else:
             messagebox.showerror("Erro!", "Selecione um item válido!")

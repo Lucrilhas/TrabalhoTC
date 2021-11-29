@@ -6,7 +6,6 @@ class AFD_front(Front):
         infos = {
             'auto_exp': 'O que é um Autômato Deterministico?',
             'indc_txt': 'AFD',
-            'path_tests': 'automatos/testes/testes_afd',
             'auto': AutomatoDeterministico
         }
         super().__init__(janela, infos)
