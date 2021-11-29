@@ -74,8 +74,6 @@ class AutomatoDeterministico:
             })
             return passos, 'Palavra inválida!\nA linguagem acabou em um estado não final!'
 
-
-
     def start(self):
         p, m = self.processa_palavra()
         return p, m, self.tupla

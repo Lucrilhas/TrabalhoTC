@@ -1,0 +1,19 @@
+a, b, c
+A, B, C, D, E
+A
+D, E
+baab
+A, a, A
+A, b, A
+A, a, B
+B, a, C
+B, b, C
+C, a, D
+C, b, D
+C, c, E
+E, c, E
+
+
+
+
+

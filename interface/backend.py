@@ -19,9 +19,13 @@ def get_tests(path):
 
 def salvar_auto(valores, nome, path):
     with open(f'{path}/{nome}.txt', 'w+') as arq:
-        for l in valores:
-            arq.write(valores[l])
-
+        arq.write(valores['e'] + '\n')
+        arq.write(valores['q'] + '\n')
+        arq.write(valores['i'] + '\n')
+        arq.write(valores['f'] + '\n')
+        arq.write(valores['p'] + '\n')
+        arq.write(valores['ft'] + '\n')
+            
 
 def desenha_estados(passos, vals):
     imgs = []

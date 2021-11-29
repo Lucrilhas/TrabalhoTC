@@ -35,6 +35,14 @@ class AutomatoNDeterministico(AutomatoDeterministico):
         for chave in regras_dicio.keys():
             for chave1 in regras_dicio[chave].keys():
                 regras_afd.append([chave, chave1, regras_dicio[chave][chave1]])
+
+        inconsistentes = []
+        for regra in regras_afd:
+            if not len(regra[2]):
+                inconsistentes.append(regra)
+        for item in inconsistentes:
+            regras_afd.remove(item)
+
         self.tupla['ft'] = regras_afd.copy()
 
     def converter_para_afd(self, afn_dicio):
@@ -93,8 +101,9 @@ class AutomatoNDeterministico(AutomatoDeterministico):
             lista_novos_estados.remove(lista_novos_estados[0])
 
         # Estados finais do AFD
-        lista_estados_afd = list(afd.keys())
+        lista_estados_afd = [estado for estado in list(afd.keys()) if estado != '']
         estados_finais_afd = []
+
         for eafd in lista_estados_afd:
             for item in eafd:
                 if item in estados_finais_afn:
@@ -102,9 +111,9 @@ class AutomatoNDeterministico(AutomatoDeterministico):
                     break
 
         # Setar valores aos atributos
-        self.tupla['q'] = lista_estados_afd
-        self.tupla['f'] = estados_finais_afd
         self.extrair_regras_dicionario(afd)
+        self.tupla['q'] = lista_estados_afd.copy()
+        self.tupla['f'] = estados_finais_afd.copy()
 
     def executa_afd(self):
         # Criação de um objeto de um automato finito deterministico
@@ -112,7 +121,6 @@ class AutomatoNDeterministico(AutomatoDeterministico):
         automato.print_tupla()
         saida = automato.start()
         return saida
-
 
     def start(self):
         afn_dicio = self.regras_para_dicionario()
