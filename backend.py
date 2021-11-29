@@ -1,7 +1,6 @@
-import os
 import igraph as ig
-from PIL import ImageTk, Image
 import pandas as pd
+from PIL import ImageTk, Image
 
 
 class BackEnd():

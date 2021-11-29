@@ -1,5 +1,6 @@
-from interface.Front_tab import Front
 from automatos.AutomatosNDeterministicos import AutomatoNDeterministico
+from interface.Front_tab import Front
+
 
 class AFND_front(Front):
     def __init__(self, janela):
