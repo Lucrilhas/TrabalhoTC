@@ -105,7 +105,8 @@ class Front:
     def iniciar(self):
         valores = self.get_valores()
         auto = self.infos['auto'](valores)
-
+        if self.infos['indc_txt'] == 'AFND':
+            ini = desenha_ini(valores)
         # auto.print_tupla()
         valid = auto.valida_Tupla()
 
@@ -113,6 +114,9 @@ class Front:
             self.passos, self.resultado, valores = auto.start()
             self.imgs = desenha_estados(self.passos, valores)
             self.passo_atual = 0
+            if self.infos['indc_txt'] == 'AFND':
+                self.imgs.insert(0, ini)
+                self.passos.insert(0, {'ea': ' ', 'rp': ' ', 'la': ' ', 'pe': ' ', 'rt': ' '})
             self.inicia_resultado()
         else:
             messagebox.showerror("Palavra Inválida!", valid)
@@ -147,7 +151,6 @@ class Front:
         self.limpar()
         if self.filhos['cbbox'].current() != -1:
             vals = self.be.get_valores(self.infos['indc_txt'])[self.filhos['cbbox'].current()]
-            print(vals)
             self.filhos['edts'][0].insert(0, vals['q'].replace('\'', '').replace('[', '').replace(']', ''))
             self.filhos['edts'][1].insert(0, vals['e'].replace('\'', '').replace('[', '').replace(']', ''))
             self.filhos['edts'][2].insert(0, vals['i'].replace('\'', '').replace('[', '').replace(']', ''))

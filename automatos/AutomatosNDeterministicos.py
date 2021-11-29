@@ -118,7 +118,7 @@ class AutomatoNDeterministico(AutomatoDeterministico):
     def executa_afd(self):
         # Criação de um objeto de um automato finito deterministico
         automato = AutomatoDeterministico(self.tupla)
-        automato.print_tupla()
+        # automato.print_tupla()
         saida = automato.start()
         return saida
 
