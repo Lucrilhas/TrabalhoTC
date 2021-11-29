@@ -35,14 +35,6 @@ class AutomatoNDeterministico(AutomatoDeterministico):
         for chave in regras_dicio.keys():
             for chave1 in regras_dicio[chave].keys():
                 regras_afd.append([chave, chave1, regras_dicio[chave][chave1]])
-
-        inconsistentes = []
-        for regra in regras_afd:
-            if not len(regra[2]):
-                inconsistentes.append(regra)
-        for item in inconsistentes:
-            regras_afd.remove(item)
-
         self.tupla['ft'] = regras_afd.copy()
 
     def converter_para_afd(self, afn_dicio):
@@ -101,7 +93,7 @@ class AutomatoNDeterministico(AutomatoDeterministico):
             lista_novos_estados.remove(lista_novos_estados[0])
 
         # Estados finais do AFD
-        lista_estados_afd = [estado for estado in list(afd.keys()) if estado != '']
+        lista_estados_afd = list(afd.keys())
         estados_finais_afd = []
 
         for eafd in lista_estados_afd:
