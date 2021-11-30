@@ -13,5 +13,4 @@ Universidade federal de Catalão - UFCAT.<br>
     * ramonsoares@discente.ufcat.edu.br
   
 ##### Tema
-O tema escolhido para nossa implementação é o de autômato de pilha, 
-e suas variações.
+O tema escolhido para nossa implementação é o de autômatos finitos determinísticos e não determinísticos.
