@@ -14,7 +14,7 @@ class BackEnd():
         valores['p'] = f"'{valores['p']}'"
 
         if nome in self.db['nome'].values:
-            self.db.drop(self.db[(self.db['tipo'] == 'AFND') & (self.db['nome'] == 'afn03')].index[0], inplace=True)
+            self.db.drop(self.db[(self.db['tipo'] == origem) & (self.db['nome'] == nome)].index[0], inplace=True)
             
         self.db = self.db.append(valores, ignore_index=True)
         self.db.to_csv('automatos/casos.csv', index=False)
